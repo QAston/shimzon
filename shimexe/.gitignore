@@ -1,0 +1,10 @@
+.vscode/
+*.exe
+*.obj
+*.pdb
+*.ilk
+*.o
+checksum.sha*
+obj/
+bin/
+archive/
