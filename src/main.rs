@@ -11,13 +11,8 @@ struct ShimConf {
     args: Option<String>,
 }
 
-#[derive(Deserialize)]
-struct Config {
-    base_out_path: String,
-    shim_exe_path: String
-}
-
-fn gen_shim(source_exe: &str, dest_dir: &str, shim_name: &str, config: &Config, ) -> i32 { 
+fn gen_shim(source_exe: &str, dest_dir: &str, shim_name: &str) -> i32 { 
+    let shim_executable = include_bytes!(concat!(env!("OUT_DIR"), "/shim.exe"));
     // check if source exists
     match std::fs::metadata(Path::new(source_exe)) {
         Ok(meta) => {
@@ -32,7 +27,6 @@ fn gen_shim(source_exe: &str, dest_dir: &str, shim_name: &str, config: &Config, 
             }
         }
     }
-    let dest_dir = [&config.base_out_path, dest_dir].iter().collect::<PathBuf>();
     let dest_dir = Path::new(&dest_dir);
 
     if Path::new(shim_name).extension().unwrap_or(std::ffi::OsStr::new("")) != "exe" {
@@ -42,11 +36,8 @@ fn gen_shim(source_exe: &str, dest_dir: &str, shim_name: &str, config: &Config, 
     std::fs::create_dir_all(dest_dir).unwrap();
     let shim_path = [&dest_dir, Path::new(shim_name)].iter().collect::<PathBuf>();
     let shim_path = Path::new(&shim_path);
-    let shim_conf_path = shim_path.with_extension("shim");
-    
-
-    let shim_binary = Path::new(&config.shim_exe_path);
-    std::fs::copy(shim_binary, shim_path).unwrap();
+    let shim_conf_path = shim_path.with_extension("shim");    
+    std::fs::write(shim_path, shim_executable).unwrap();
 
     let mut source_path = std::env::current_dir().unwrap();
     source_path.push(source_exe);
@@ -70,10 +61,6 @@ fn gen_shim(source_exe: &str, dest_dir: &str, shim_name: &str, config: &Config, 
 }
 
 fn main() {
-    let exe_path = std::env::current_exe();
-    let conf_path = exe_path.unwrap().parent().unwrap().join("config.toml");
-    let toml_str = std::fs::read_to_string(conf_path).unwrap();
-    let decoded: Config = toml::from_str(&toml_str).unwrap();
 
     let matches = App::new(std::env::current_exe().unwrap().to_str().unwrap())
             .subcommand(SubCommand::with_name("add")
@@ -100,7 +87,7 @@ fn main() {
         let source = matches.value_of("source-exe").unwrap();
         let dest = matches.value_of("dest-dir").unwrap_or("");
         let target = matches.value_of("shim-name").unwrap_or(Path::new(&source).file_name().unwrap().to_str().unwrap());
-        std::process::exit(gen_shim(&source, &dest, &target, &decoded));
+        std::process::exit(gen_shim(&source, &dest, &target));
     } else {
         println!("Missing arguments, try --help");
     }

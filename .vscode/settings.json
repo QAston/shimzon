@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "clocale": "cpp",
+        "cassert": "cpp"
+    }
+}
