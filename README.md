@@ -9,15 +9,16 @@ A terminal utility that creates an executable shim, which wraps the shimmed appl
     - working directory
     - environment variable
     - arguments
-3. A workaround for Cygwin/Msys Bash-based shells which [can't handle MSIX's reparse points](https://github.com/msys2/MSYS2-packages/issues/1943)
+3. Making aliases/wrappers for shell scripts which can run in any windows shell (msys/cygwin bash, cmd, powershell)
+4. A workaround for Cygwin/Msys Bash-based shells which [can't handle MSIX's reparse points](https://github.com/msys2/MSYS2-packages/issues/1943)
 
 ### Related tools 
 
-- [portable_env](https://github.com/QAston/portable_env) - dynamically update your %PATH% variable
+- [portable_env](https://github.com/QAston/portable_env) - dynamically update your %PATH% variable in any windows shell (bash, cmd, powershell)
 
 ### Alternatives
 
-- <https://github.com/chocolatey/shimgen> - restrictive license
+- <https://github.com/chocolatey/shimgen> - restrictive license, closed source
 - <https://github.com/pfmoore/shimmy> - depends on python, embeds executable's config in the binary, fewer config options for target executable
 - <https://github.com/lukesampson/shimexe> - supports shims for bat/ps1 files in addition to exe, fewer config options for target executable
 - [execution alias feature of MSIX](https://www.tiraniddo.dev/2019/09/overview-of-windows-execution-aliases.html) - limited to applications using MSIX, the path is hardcoded to a single directory, doesn't work in cygin/msys bash
