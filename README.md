@@ -20,7 +20,7 @@ A terminal utility that creates an executable shim, which wraps the shimmed appl
 
 - <https://github.com/chocolatey/shimgen> - restrictive license, closed source
 - <https://github.com/pfmoore/shimmy> - depends on python, embeds executable's config in the binary, fewer config options for target executable
-- <https://github.com/lukesampson/shimexe> - supports shims for bat/ps1 files in addition to exe, fewer config options for target executable
+- <https://github.com/lukesampson/shimexe> - supports making bat/ps1 wrappers in addition to exe wrappers, fewer config options for target executable
 - [execution alias feature of MSIX](https://www.tiraniddo.dev/2019/09/overview-of-windows-execution-aliases.html) - limited to applications using MSIX, the path is hardcoded to a single directory, doesn't work in cygin/msys bash
 - making a symlink - doesn't work for executables which load dlls from directories of the executable, no config options for the target executable
 
