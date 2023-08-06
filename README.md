@@ -31,6 +31,7 @@ A terminal utility that creates an executable shim, which wraps the shimmed appl
 - implement some of the arguments: https://github.com/chocolatey/shimgen#shim-arguments
 - documentation
 - error handling
+- when neovim calls shimmed win32yank the window stays on for some reason
 - shimzon sync which reads a .shim file in a directory:
     - .shim specifies where to take executables from, additional options per entry and whether to exclude something from shimming
     - when there's no .shim file it will create one
